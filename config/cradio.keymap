@@ -88,7 +88,7 @@
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│          │   F1     │  F2      │  F3      │  F10     │   │          │          │          │          │          │
-            &trans     &kp F1     &kp F2     &kp F3     &kp F10        &trans     &trans     &trans     &trans     &trans
+            &trans     &kp F1     &kp F2     &kp F3     &kp F10        &trans     &trans     &kp END    &trans     &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │   F4     │  F5      │  F6      │  F11     │   │          │          │          │          │          │
             &trans     &kp F4     &kp F5     &kp F6     &kp F11        &trans     &trans     &trans     &trans     &trans
