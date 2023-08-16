@@ -54,7 +54,7 @@
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│  ESC     │  1       │  2       │  3       │          │   │ HOME     │ END      │          │          │  :       │
-            &kp ESC    &kp N1     &kp N2     &kp N3     &trans         &kp HOME   &kp END     &trans    &trans    &kp COLON
+            &kp ESC    &kp N1     &kp N2     &kp N3     &trans         &kp HOME   &kp END    &kp END    &trans    &kp COLON
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  TAB     │  4       │  5       │  6       │          │   │ LEFT     │ DOWN     │ UP       │ RIGHT    │  ;       │
             &kp TAB    &kp N4     &kp N5     &kp N6     &trans         &kp LARW   &kp DARW   &kp UARW   &kp RARW   &kp SEMI
