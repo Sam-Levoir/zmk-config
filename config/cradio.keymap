@@ -5,6 +5,13 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 
+// Layer Names
+#define DEFAULT_L 0
+#define GAMES_L   1
+#define LEFT_L    2
+#define RIGHT_L   3
+#define BOTH_L    4
+
 // Home row mods macro
 #define HRML(k1,k2,k3,k4) &ht LSHFT k1  &ht LALT k2  &ht LCTRL k3  &ht LGUI k4
 #define HRMR(k1,k2,k3,k4) &ht RGUI k1  &ht RCTRL k2  &ht RALT k3  &ht RSHFT k4
@@ -15,9 +22,9 @@
             label = "hold_tap";
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "hold-preferred";
-            tapping-term-ms = <400>;
-            quick-tap-ms = <250>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            // quick-tap-ms = <250>;
             // global-quick-tap;
             bindings = <&kp>, <&kp>;
         };
@@ -26,8 +33,8 @@
     conditional_layers {
         compatible = "zmk,conditional-layers";
         tri_layer {
-            if-layers = <1 2>;
-            then-layer = <3>;
+            if-layers = <LEFT_L RIGHT_L>;
+            then-layer = <BOTH_L>;
         };
     };
 
@@ -46,12 +53,31 @@
         //│  Z       │  X       │  C       │  V       │  B       │   │  N       │  M       │ , <      │ . >      │ / ?      │
             &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                            &kp BSPC  &lt 1 SPACE     &lt 2 ENTER  &kp DEL
+                                        &kp BSPC  &lt LEFT_L SPACE  &lt RIGHT_L ENTER  &kp DEL
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
 
         // 1
+        // I (Sam Levoir) was having trouble playing games with the home row mods, so heres this layer just for games.
+        games_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│  Q       │  W       │  E       │  R       │  T       │   │  Y       │  U       │  I       │  O       │  P       │
+            &kp Q      &kp W      &kp E      &kp R      &kp T          &kp Y      &kp U      &kp I      &kp O      &kp P
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  A       │  S       │  D       │  F       │  G       │   │  H       │  J       │  K       │  L       │ ' "      │
+            &kp A      &kp S      &kp D      &kp F      &kp G          &kp H      HRMR(J,        K,         L,        SQT)
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  Z       │  X       │  C       │  V       │  B       │   │  N       │  M       │ , <      │ . >      │ / ?      │
+            &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
+                                            &kp LALT    &kp SPACE  &lt RIGHT_L ENTER  &lt LEFT_L DEL
+        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
+            >;
+        };
+
+        // 2
         left_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
@@ -69,7 +95,7 @@
             >;
         };
 
-        // 2
+        // 3
         right_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
@@ -87,8 +113,8 @@
             >;
         };
 
-        // 3
-        tri_layer {
+        // 4
+        both_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│          │   F1     │  F2      │  F3      │  F10     │   │          │          │          │          │          │
@@ -98,30 +124,12 @@
             &trans     &kp F4     &kp F5     &kp F6     &kp F11        &trans     &trans     &trans     &trans     &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │   F7     │  F8      │  F9      │  F12     │   │ Game Tog │          │          │          │          │
-            &trans     &kp F7     &kp F8     &kp F9     &kp F12        &tog 4     &trans     &trans     &trans     &trans
+            &trans     &kp F7     &kp F8     &kp F9     &kp F12      &tog GAMES_L &trans     &trans     &trans     &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                               &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
 
-        // 4
-        // I (Sam Levoir) was having trouble playing games with the home row mods, so heres this layer just for games.
-        games_layer {
-            bindings = <
-        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  Q       │  W       │  E       │  R       │  T       │   │  Y       │  U       │  I       │  O       │  P       │
-            &kp Q      &kp W      &kp E      &kp R      &kp T          &kp Y      &kp U      &kp I      &kp O      &kp P
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  A       │  S       │  D       │  F       │  G       │   │  H       │  J       │  K       │  L       │ ' "      │
-            &kp A      &kp S      &kp D      &kp F      &kp G          &kp H      HRMR(J,        K,         L,        SQT)
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  Z       │  X       │  C       │  V       │  B       │   │  N       │  M       │ , <      │ . >      │ / ?      │
-            &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH
-        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                            &kp LALT    &kp SPACE     &lt 2 ENTER &lt 1 DEL
-        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
-            >;
-        };
     };
 };
